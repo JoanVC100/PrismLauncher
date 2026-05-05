@@ -45,7 +45,9 @@
 #include "minecraft/MinecraftInstance.h"
 
 #ifdef Q_OS_LINUX
+#if defined(INCLUDE_GAMEMODE_LINUX)
 #include "gamemode_client.h"
+#endif
 #endif
 
 LauncherPartLaunch::LauncherPartLaunch(LaunchTask* parent)
@@ -149,7 +151,7 @@ void LauncherPartLaunch::executeTask()
         m_process.start(javaPath, args);
     }
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && defined(INCLUDE_GAMEMODE_LINUX)
     if (instance->settings()->get("EnableFeralGamemode").toBool() && APPLICATION->capabilities() & Application::SupportsGameMode) {
         auto pid = m_process.processId();
         if (pid) {
